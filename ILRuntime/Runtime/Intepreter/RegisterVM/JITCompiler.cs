@@ -281,6 +281,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                 case Code.Cgt:
                 case Code.Cgt_Un:
                 case Code.Ceq:
+                case Code.Ldelem_I4:
                     op.Register1 = (short)(baseRegIdx - 2); //explicit use dest register for optimization
                     op.Register2 = (short)(baseRegIdx - 2);
                     op.Register3 = (short)(baseRegIdx - 1);
@@ -352,6 +353,14 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                     op.Code = OpCodes.OpCodeREnum.Move;
                     op.Register1 = baseRegIdx++;
                     op.Register2 = (short)(code.Code - (Code.Ldarg_0));
+                    break;
+                case Code.Ldarg_S:
+                    op.Register1 = baseRegIdx++;
+                    op.Register2 = (short)((ParameterDefinition)ins.Operand).Index;
+                    if (def.HasThis)
+                    {
+                        op.Register2++;
+                    }
                     break;
                 case Code.Newarr:
                     op.Register1 = (short)(baseRegIdx - 1);
