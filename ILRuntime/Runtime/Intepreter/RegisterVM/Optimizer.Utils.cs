@@ -212,6 +212,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                 case OpCodeREnum.Ldelem_I8:
                 case OpCodeREnum.Ldelem_R4:
                 case OpCodeREnum.Ldelem_R8:
+                case OpCodeREnum.Ldelem_Ref:
                     r1 = op.Register2;
                     r2 = op.Register3;
                     return true;
@@ -333,6 +334,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                 case OpCodeREnum.Ldelem_I8:
                 case OpCodeREnum.Ldelem_R4:
                 case OpCodeREnum.Ldelem_R8:
+                case OpCodeREnum.Ldelem_Ref:
                     r1 = op.Register1;
                     return true;
                 case OpCodeREnum.Br_S:
@@ -516,6 +518,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                 case OpCodeREnum.Ldelem_I8:
                 case OpCodeREnum.Ldelem_R4:
                 case OpCodeREnum.Ldelem_R8:
+                case OpCodeREnum.Ldelem_Ref:
                     switch (idx)
                     {
                         case 0:
@@ -707,6 +710,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                 case OpCodeREnum.Ldelem_I8:
                 case OpCodeREnum.Ldelem_R4:
                 case OpCodeREnum.Ldelem_R8:
+                case OpCodeREnum.Ldelem_Ref:
                     op.Register1 = dst;
                     break;
                 case OpCodeREnum.Br_S:

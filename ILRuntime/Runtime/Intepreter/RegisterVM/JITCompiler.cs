@@ -290,6 +290,7 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                 case Code.Ldelem_I8:
                 case Code.Ldelem_R4:
                 case Code.Ldelem_R8:
+                case Code.Ldelem_Ref:
                     op.Register1 = (short)(baseRegIdx - 2); //explicit use dest register for optimization
                     op.Register2 = (short)(baseRegIdx - 2);
                     op.Register3 = (short)(baseRegIdx - 1);

@@ -2421,6 +2421,35 @@ namespace ILRuntime.Runtime.Intepreter
                                     *(double*)&reg1->Value = arr[reg3->Value];
                                 }
                                 break;
+                            case OpCodeREnum.Ldelem_Ref:
+                            case OpCodeREnum.Ldelem_Any:
+                                {
+                                    reg1 = Add(r, ip->Register1);
+                                    reg2 = Add(r, ip->Register2);
+                                    reg3 = Add(r, ip->Register3);
+                                    
+                                    Array arr = mStack[reg2->Value] as Array;
+                                    object obj = arr.GetValue(reg3->Value);
+                                    if (obj is CrossBindingAdaptorType)
+                                        obj = ((CrossBindingAdaptorType)obj).ILInstance;
+
+                                    if (obj is ILTypeInstance)
+                                    {
+                                        ILTypeInstance ins = (ILTypeInstance)obj;
+                                        if (ins.Type.IsValueType && !ins.Boxed)
+                                        {
+                                            AllocValueType(arrRef, ins.Type);
+                                            StackObject* dst = ILIntepreter.ResolveReference(reg1);
+                                            ins.CopyToRegister(dst, mStack);
+                                        }
+                                        else
+                                            AssignToRegister(ref info, ip->Register1, obj);
+                                    }
+                                    else
+                                        esp = PushObject(esp - 1 - 1, mStack, obj, !arr.GetType().GetElementType().IsPrimitive);
+
+                                }
+                                break;
                             #endregion
 
                             case OpCodeREnum.Throw:
