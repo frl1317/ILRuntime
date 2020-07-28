@@ -83,6 +83,21 @@ namespace ILRuntime.Runtime.Intepreter.RegisterVM
                             short ySrc, ySrc2, ySrc3;
                             if (GetOpcodeSourceRegister(ref Y, hasReturn, out ySrc, out ySrc2, out ySrc3))
                             {
+                                if (ySrc >= 0 && ySrc == xSrc)
+                                {
+                                    ended = true;
+                                    break;
+                                }
+                                if (ySrc2 >= 0 && ySrc2 == xSrc)
+                                {
+                                    ended = true;
+                                    break;
+                                }
+                                if (ySrc3 >= 0 && ySrc3 == xSrc)
+                                {
+                                    ended = true;
+                                    break;
+                                }
                                 if (ySrc >= 0 && ySrc == xDst)
                                 {
                                     ended = true;
