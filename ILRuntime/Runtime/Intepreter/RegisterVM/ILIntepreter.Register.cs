@@ -5376,6 +5376,17 @@ namespace ILRuntime.Runtime.Intepreter
                                 eh = GetCorrespondingExceptionHandler(ehs, null, addr, ExceptionHandlerType.Finally, false);
                             if (eh != null)
                             {
+                                //Clear call stack
+                                while (stack.Frames.Peek().BasePointer != frame.BasePointer)
+                                {
+                                    var f = stack.Frames.Peek();
+                                    esp = stack.PopFrame(ref f, esp);
+                                    if (f.Method.ReturnType != AppDomain.VoidType)
+                                    {
+                                        Free(esp - 1);
+                                        esp--;
+                                    }
+                                }
                                 unhandledException = false;
                                 finallyEndAddress = -1;
                                 lastCaughtEx = ex is ILRuntimeException ? ex : new ILRuntimeException(ex.Message, this, method, oriESP, ex);
