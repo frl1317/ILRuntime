@@ -127,6 +127,12 @@ namespace ILRuntimeDebugEngine
                 namespaceList.Push(namespaceDeclarationSyntax.Name.ToString());
                 usingSyntaxList.AddRange(namespaceDeclarationSyntax.Usings);
             }
+            else if( node is FileScopedNamespaceDeclarationSyntax)
+            {
+                var namespaceDeclarationSyntax = node as FileScopedNamespaceDeclarationSyntax;
+                namespaceList.Push(namespaceDeclarationSyntax.Name.ToString());
+                usingSyntaxList.AddRange(namespaceDeclarationSyntax.Usings);
+            }
             GetCurrentNameSpaceDeclaration(node.Parent, namespaceList, usingSyntaxList);
         }
     }
